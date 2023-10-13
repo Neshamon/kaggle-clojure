@@ -5,4 +5,5 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [techascent/tech.ml.dataset "7.012"]]
-  :repl-options {:init-ns kaggle-clojure.core})
+  :repl-options {:init-ns kaggle-clojure.core}
+  :main kaggle-clojure.core)
