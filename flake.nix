@@ -26,6 +26,7 @@
               boot
               clojure
               leiningen
+              unzip
             ];
 
             shellHook = ''
