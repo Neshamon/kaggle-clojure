@@ -101,8 +101,8 @@
   on a specific split. The higher the info gain value,
   the better the decision split is."
   [parent-node left-child right-child]
-  (let [num-left (map float (/ (count left-child) (count parent-node)))]
-    (let [num-right (map float (/ (count right-child) (count parent-node)))]
+  (let [num-left (float (/ (count left-child) (count parent-node)))]
+    (let [num-right (float (/ (count right-child) (count parent-node)))]
       (let [gain (- (entropy parent-node) (mapcat #(map float (* % (entropy %))) num-left num-right))]
         gain))))
 
