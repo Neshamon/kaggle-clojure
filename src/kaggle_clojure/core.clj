@@ -72,7 +72,7 @@
 
 (defn entropy [a]
   (let [counts (bincounts a)]
-    (let [percentage (map #(/ % (count a)) counts)]
+    (let [percentage (int (map #(/ % (count a)) counts))]
       (let [chaos 0]
            (map #(if (< 0 %)
                    (recur (+ chaos (* % (log-base-n 2 %))))) percentage)))))
