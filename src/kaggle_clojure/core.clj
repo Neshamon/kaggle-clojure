@@ -109,4 +109,13 @@
 
 (information-gain [ 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 ]
                   [ 0 0 0 0 0 0 0 0 0 0 1 1 ]
-                  [ 0 0 0 0 1 1 1 1 ])
+                  [ 0 0 0 0 1 1 1 1 ]) ;; => 0.180937...
+
+(defrecord Node [feature
+                 threshold
+                 data_left
+                 data_right
+                 gain value])
+
+(defrecord DecisionTree
+    )
