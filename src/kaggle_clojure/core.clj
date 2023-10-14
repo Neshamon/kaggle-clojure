@@ -103,7 +103,10 @@
   [parent-node left-child right-child]
   (let [num-left (float (/ (count left-child) (count parent-node)))]
     (let [num-right (float (/ (count right-child) (count parent-node)))]
-      (let [gain (- (entropy parent-node) (mapcat #(map float (* % (entropy %))) num-left num-right))]
+      (let [gain (- (entropy parent-node) (map #(float (* % (entropy %))) (vec '(num-left
+                                                                                 left-child
+                                                                                 num-right
+                                                                                 right-child))))]
         gain))))
 
 (information-gain [ 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 ]
