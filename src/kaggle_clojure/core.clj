@@ -56,25 +56,42 @@
 (def melb-features
   (ds/select-columns melb-dataset ["Rooms" "Bathroom" "Landsize" "Lattitude" "Longtitude"]))
 
-(def bin-arr '())
+;; Couldn't find any decision tree models available in clojure,
+;; so I'm building one from scratch
 
-(defn bincounts [a]
+(defn bincounts
+  "This is a shallow reproduction of NumPy's bincount.
+  This function takes a vector, maps over all occurences
+  of a element and sets them up in a key-value set.
+
+  Then the values of frequencies is then retrieved by vals.
+  This separates each element to their own data bin yet still
+  isolates the duplication count.
+
+  After that I iterate over the new sequence with keep with
+  a positive integer predicate. This makes it so only positive
+  integers are returned by this function"
+  [a]
   (keep #(if (pos-int? %) %) (vals (frequencies a))))
 
-(int? -99)
+(bincounts [1 3 3 3 3 5 6 1 9]) ;; => (2 4 1 1 1)
 
-(bincounts [1 3 3 3 3 5 6 1 9])
+(defn log-base-n
+  "This function allows you to use any base you want
+  with the log function."
+  [base n]
+  (/ (Math/log n) (Math/log base))) ;; log base of n function
 
-(println bin-arr)
+(defn entropy
+  "This is a implementation of the entropy formula.
 
-(defn log-base-n [base n]
-  (/ (Math/log n) (Math/log base)))
-
-(defn entropy [a]
+  It measures the purity of a split ranging from
+  0 (pure) to 1 (impure) in decision trees."
+  [a]
   (let [counts (bincounts a)]
     (let [percentage (map float (map #(/ % (count a)) counts))]
       (let [chaos (map #(if (< 0.0 %)
                           (* % (log-base-n 2 %))) percentage)]
-        (* (reduce + chaos) -1)))))
+        (* (reduce + chaos) -1))))) ;; This took me like 5 hours
 
-(entropy [0 0 0 0 0 0 0 1 1 1])
+(entropy [0 0 0 0 0 0 0 1 1 1]) ;; => 0.88129...
