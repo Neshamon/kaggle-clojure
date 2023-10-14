@@ -95,3 +95,17 @@
         (* (reduce + chaos) -1))))) ;; This only took me 5 hours
 
 (entropy [0 0 0 0 0 0 0 1 1 1]) ;; => 0.88129...
+
+(defn information-gain
+  "This represents an average of all entropy values based
+  on a specific split. The higher the info gain value,
+  the better the decision split is."
+  [parent-node left-child right-child]
+  (let [num-left (map float (/ (count left-child) (count parent-node)))]
+    (let [num-right (map float (/ (count right-child) (count parent-node)))]
+      (let [gain (- (entropy parent-node) (mapcat #(map float (* % (entropy %))) num-left num-right))]
+        gain))))
+
+(information-gain [ 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 ]
+                  [ 0 0 0 0 0 0 0 0 0 0 1 1 ]
+                  [ 0 0 0 0 1 1 1 1 ])
