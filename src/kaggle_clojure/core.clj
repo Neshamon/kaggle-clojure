@@ -74,24 +74,24 @@
   [a]
   (keep #(if (pos-int? %) %) (vals (frequencies a))))
 
-(bincounts [1 3 3 3 3 5 6 1 9]) ;; => (2 4 1 1 1)
+(bincounts [1 3 3 3 3 5 6 1 9]) ;; => {1 2, 3 4, 5 1, 6 1, 9 1} => (2 4 1 1 1)
 
 (defn log-base-n
   "This function allows you to use any base you want
   with the log function."
   [base n]
-  (/ (Math/log n) (Math/log base))) ;; log base of n function
+  (/ (Math/log n) (Math/log base)))
 
 (defn entropy
   "This is a implementation of the entropy formula.
 
-  It measures the purity of a split ranging from
-  0 (pure) to 1 (impure) in decision trees."
+  It measures the purity of a split at the node level
+  ranging from 0 (pure) to 1 (impure) in decision trees."
   [a]
   (let [counts (bincounts a)]
     (let [percentage (map float (map #(/ % (count a)) counts))]
       (let [chaos (map #(if (< 0.0 %)
                           (* % (log-base-n 2 %))) percentage)]
-        (* (reduce + chaos) -1))))) ;; This took me like 5 hours
+        (* (reduce + chaos) -1))))) ;; This only took me 5 hours
 
 (entropy [0 0 0 0 0 0 0 1 1 1]) ;; => 0.88129...
