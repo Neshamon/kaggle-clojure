@@ -117,5 +117,27 @@
                  data_right
                  gain value])
 
+(defprotocol DecisionTreeRegression
+  (init [self min-sample-split, max-depth]
+    ())
+  (_entropy [s]
+    (entropy s))
+  (_information-gain [parent-node left-child right-child]
+    (information-gain parent-node left-child right-child))
+  (best-split [features y]
+    (let [best_split {}]
+      (let [best-info-gain -1]
+        (let [n-cols (first (ds/shape melb-features))
+              n-rows (last (ds/shape melb-features))]
+          (map )))))
+  (build [x y depth]
+    ())
+  (fit [x y]
+    ())
+  (_predict [x]
+    ())
+  (predict [x]
+    ()))
+
 (defrecord DecisionTree
     )
